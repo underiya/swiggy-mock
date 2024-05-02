@@ -11,41 +11,71 @@ import {
     Image,
     Switch,
     Center,
+    useToast,
   } from '@chakra-ui/react'
 import axios from 'axios'
-import { MouseEventHandler, useState } from 'react'
+import {useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
-import Navbar from '../components/Navbar'
 import { useNavigate } from 'react-router-dom'
 
-interface loginCred{
-    email:string,
-    password:string,
+interface LoginCred {
+  email: string;
+  password: string;
 }
 
-const loginFunction=async(endpoint, cred, cb)=>{
-    const BaseUrl= "http://localhost:8080/api";
+const loginFunction=async(endpoint: string, cred: any, cb:any)=>{
+    const BaseUrl= "https://swiggy-mock-1.onrender.com/api";
     try {
         let res=await axios.post(`${BaseUrl}/${endpoint}`,cred );
         cb(res.data);
         console.log(res.data);
     } catch (error) {
-        console.log(error);
+      console.log("Error",error);
+      throw new Error('Login failed');
     }
 }
 
-const Login = () => {
+const Login:  React.FC  = () => {
   const navigate =useNavigate();
-    const [form , setForm] = useState<loginCred>({
+  const toast = useToast()
+
+    const [form , setForm] = useState<LoginCred>({
         email:"",
         password:"",
     })
-    const [user, setuser]= useState("");
+    const [user, setuser]= useState<string>("");
 
-    const handleClick = async()=>{
-        console.log(form);
-        await loginFunction("/login", form , setuser);
-        navigate("/feed", {state:user} )
+    const handleClick = ()=>{
+     
+         loginFunction("/login", form , setuser)
+         .then(res=>{
+          console.log("resolved", res)
+          toast({
+            title: 'Login Failed',
+            description: "Please login with correct credentials",
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          })
+          navigate("/feed", {state:user} )
+         })
+         .catch((err)=>{
+          console.log(err);
+          toast({
+            title: 'Login Failed',
+            description: "Please login with correct credentials",
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          })
+         })
+
+        //  console.log(res);
+        //   
+          
+     
+     
+        // console.log(form);
     }
   return (
     <div>
