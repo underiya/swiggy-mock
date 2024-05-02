@@ -22,14 +22,14 @@ import { BsSearch } from "react-icons/bs";
       <Box as="nav" px={4} py={2} bg="black" color="white">
         <Flex alignItems="center" justifyContent="space-between">
           {/* Logo */}
-          {/* <Link to="/"> */}
+          <Link to="/">
             <Flex dir="row"  align={"center"} justify={"center"}>
               <img style={{width:"20px", height:"20px", background:"white"}} src="Icon.png"/>  
             <Text fontSize="lg" fontWeight="bold" p={4} >
                 Masai Forum
             </Text>
             </Flex>
-          {/* </Link> */}
+          </Link>
   
           {/* Search Bar */}
           <InputGroup w="60%">

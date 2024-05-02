@@ -1,7 +1,12 @@
 
 import { Box, Heading, Text, Button } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom';
 
  function PageNotFound() {
+    const navigate = useNavigate();
+    const handleClick=()=>{
+        navigate("/")
+    }
   return (
     <Box textAlign="center" py={10} px={6}>
       <Heading
@@ -23,7 +28,8 @@ import { Box, Heading, Text, Button } from '@chakra-ui/react'
         colorScheme="teal"
         bgGradient="linear(to-r, teal.400, teal.500, teal.600)"
         color="white"
-        variant="solid">
+        variant="solid"
+        onClick={handleClick}>
         Go to Home
       </Button>
     </Box>
